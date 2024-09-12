@@ -13,8 +13,9 @@ export default function matchesPerYear(){
             }
         }
     }
-    let jsondata=JSON.stringify(object,null,2)
-    fs.writeFile('./src/public/output/matchesPerYear.json',jsondata,(err)=>{if(err)console.log(err.message)});
+    return object;
+    /*let jsondata=JSON.stringify(object,null,2)
+    fs.writeFile('./src/public/output/matchesPerYear.json',jsondata,(err)=>{if(err)console.log(err.message)});*/
     
 
 }
