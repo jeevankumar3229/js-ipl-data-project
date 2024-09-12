@@ -1,1 +1,0 @@
-var json= require('./src/data/matches.json')
