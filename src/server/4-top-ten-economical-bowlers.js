@@ -41,7 +41,7 @@ export default function calculateEconomicalBowlers(){
                             if(Number(data1[index3]['wide_runs'])>0){
                                 object[bowlers[index1]]["Wide"]=Number(data1[index3]['wide_runs'])+1
                             }
-                            if(Number(data1[index3]['wide_runs'])>0){
+                            if(Number(data1[index3]['noball_runs'])>0){
                                 object[bowlers[index1]]['Noball']=Number(data1[index3]['noball_runs'])+1
                             }
                         }
@@ -54,7 +54,7 @@ export default function calculateEconomicalBowlers(){
                             else{
                                 object[bowlers[index1]]["Wide"]=Number(data1[index3]['wide_runs'])
                             }
-                            if(Number(data1[index3]['wide_runs'])>0){
+                            if(Number(data1[index3]['noball_runs'])>0){
                                 object[bowlers[index1]]["Noball"]=1
                             }
                             else{
