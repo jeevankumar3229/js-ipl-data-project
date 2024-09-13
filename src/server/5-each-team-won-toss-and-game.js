@@ -5,13 +5,25 @@ export default function calculateTeamWonTossAndMatch(){
     for(let index=0;index<data.length;index++){
         if(data[index].hasOwnProperty("toss_winner") && data[index].hasOwnProperty("winner")){
             if(data[index]['toss_winner']=== data[index]['winner']){
-                if(object.hasOwnProperty([data[index]["winner"]]))
+                if(data[index]['winner']=== 'Rising Pune Supergiant' || data[index]['winner']=== 'Rising Pune Supergiants'){
+                    let winner="Rising Pune Supergiants"
+                    if(object.hasOwnProperty(winner))
+                    {
+                        object[winner]++;
+                    }
+                    else{
+                        object[winner]=1;
+                    }
+                }
+                else{
+                    if(object.hasOwnProperty([data[index]["winner"]]))
                     {
                         object[data[index]["winner"]]++;
                     }
                     else{
                         object[data[index]["winner"]]=1;
                     }
+                }
             }
         }
     }
