@@ -1,11 +1,11 @@
 [
   {
-    "name": "J Yadav",
-    "rate": 4.142857142857143
+    "name": "RN ten Doeschate",
+    "rate": 4
   },
   {
-    "name": "RN ten Doeschate",
-    "rate": 4.8
+    "name": "J Yadav",
+    "rate": 4.142857142857143
   },
   {
     "name": "V Kohli",
@@ -13,7 +13,7 @@
   },
   {
     "name": "R Ashwin",
-    "rate": 5.822033898305085
+    "rate": 5.871794871794871
   },
   {
     "name": "S Nadeem",
@@ -24,19 +24,19 @@
     "rate": 6.2
   },
   {
-    "name": "Z Khan",
-    "rate": 6.235294117647059
-  },
-  {
     "name": "MC Henriques",
-    "rate": 6.348387096774194
+    "rate": 6.56
   },
   {
-    "name": "MA Starc",
-    "rate": 6.850746268656716
+    "name": "Z Khan",
+    "rate": 6.579310344827586
   },
   {
     "name": "M Vijay",
     "rate": 7
+  },
+  {
+    "name": "GB Hogg",
+    "rate": 7.0476190476190474
   }
 ]
