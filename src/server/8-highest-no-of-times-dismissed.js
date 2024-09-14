@@ -5,11 +5,13 @@ export default function calculateNoOfTimesDismissed(){
     let object1={}
     let object={}
     let data=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
+    //pushing only those rows to array which contains the dismissal kind as runout,caught and lbw
     for(let index=0;index<data.length;index++){
         if(data[index]["dismissal_kind"]==='caught' || data[index]["dismissal_kind"]==='run out' || data[index]["dismissal_kind"]==='lbw'){
             fileteredArray.push(data[index])
         }
     }
+    //pushing the names of the bowler to array
     for(let index1=0;index1<fileteredArray.length;index1++){
         if(bowlerArray.includes(fileteredArray[index1]['bowler'])){
             continue;
@@ -33,9 +35,10 @@ export default function calculateNoOfTimesDismissed(){
             }
         }
     }
+
     let playerName;
     let maxvalue=0;
-    //to convert set of batsman in each baller to one batsman with most no of times dismissed
+    //to convert set of batsman in each baller as a key to one batsman with most no of times dismissed
     for(let key1 in object){
         for(let key2 in object[key1]){
             if(maxvalue<object[key1][key2]){
@@ -59,7 +62,7 @@ export default function calculateNoOfTimesDismissed(){
             }
         } 
     }
-
+    //creating new object which only contains the name of batsman with no of times dismissed  by same player
     object1[ballerName]={"name":playerName,"noofTimesDismissed": maxvalue}
     
     return object1;
