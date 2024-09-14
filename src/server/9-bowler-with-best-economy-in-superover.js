@@ -38,7 +38,7 @@ export default function calculateEconomicalBowlerInSuperOver(){
                     if(data1[index3]["bowler"]=== bowlers[index1] && (data1[index3]['inning']==='3' || data1[index3]['inning']==='4')){
                         if(object[bowlers[index1]].hasOwnProperty("Balls") && object[bowlers[index1]].hasOwnProperty("Runs")){
                             object[bowlers[index1]]["Balls"]=object[bowlers[index1]]["Balls"]+1
-                            object[bowlers[index1]]["Runs"]=object[bowlers[index1]]["Runs"]+Number(data1[index3]['is_super_over'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
+                            object[bowlers[index1]]["Runs"]=object[bowlers[index1]]["Runs"]+Number(data1[index3]['total_runs'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
                             if(Number(data1[index3]['wide_runs'])>0){
                                 object[bowlers[index1]]["Wide"]=object[bowlers[index1]]["Wide"]+1
                             }
@@ -48,7 +48,7 @@ export default function calculateEconomicalBowlerInSuperOver(){
                         }
                         else{
                             object[bowlers[index1]]["Balls"]=1
-                            object[bowlers[index1]]["Runs"]=Number(data1[index3]['is_super_over'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
+                            object[bowlers[index1]]["Runs"]=Number(data1[index3]['total_runs'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
                             if(Number(data1[index3]['wide_runs'])>0){
                                 object[bowlers[index1]]["Wide"]=1
                             }
