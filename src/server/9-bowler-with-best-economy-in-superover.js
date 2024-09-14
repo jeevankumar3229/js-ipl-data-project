@@ -1,6 +1,5 @@
 import fs from "fs"
 export default function calculateEconomicalBowlerInSuperOver(){
-
     let object={};
     let idArray=[]
     let bowlers=[]
@@ -8,6 +7,7 @@ export default function calculateEconomicalBowlerInSuperOver(){
     let sliceArray=[]
     let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
     let data1=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
+    //pushing match id to array whose reult is tie
     for(let index4=0;index4<data.length;index4++){
         if(data[index4].hasOwnProperty("id") && data[index4].hasOwnProperty("result")){
             if(data[index4]['result']=== 'tie')
@@ -16,6 +16,7 @@ export default function calculateEconomicalBowlerInSuperOver(){
             }
         }
     }
+    //pushing the names of the bowler to array who played in super over
     for(let index=0;index<data1.length;index++){
         if(idArray.includes(data1[index]["match_id"])){
             if(data1[index].hasOwnProperty("bowler")){
@@ -71,14 +72,15 @@ export default function calculateEconomicalBowlerInSuperOver(){
             }
         }  
     }
+    //craeting an array of objects with object properties as name and rate
     for(let keys in object){
         let over=((object[keys]['Balls']-object[keys]['Wide']-object[keys]['Noball'])/6)//.toFixed(2);
         let economic=((object[keys]['Runs'])/over)//.toFixed(2)
         array.push({"name":keys,"rate":economic})
 
     }
-    array.sort((a, b) => a.rate-b.rate);
-    sliceArray=array.slice(0,1)
+    array.sort((a, b) => a.rate-b.rate);//sorting the array of objects
+    sliceArray=array.slice(0,1)//slicing
     return sliceArray;
 
 }
