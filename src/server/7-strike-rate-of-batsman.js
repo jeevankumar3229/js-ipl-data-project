@@ -1,7 +1,7 @@
 import matchesPerYear from "./1-matches-per-year.js";
 import fs from 'fs';
 export default function calculateStrikeRate(){
-    let output=matchesPerYear();
+    let output=matchesPerYear();//This functions returns the object with year as key
     let object={};
     let object1={};
     let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
@@ -11,6 +11,7 @@ export default function calculateStrikeRate(){
         object1[key]={}
         let idArray=[]
         let batsman=[]
+        //pushing the matchid of each season to array
         for(let index=0;index<data.length;index++){
             if(data[index].hasOwnProperty("id") && data[index].hasOwnProperty("season")){
                 if(data[index]['season']=== key)
@@ -19,6 +20,7 @@ export default function calculateStrikeRate(){
                 }
             }
         }
+        //pushing the name of the batsman playing in each season
         for(let index1=0;index1<data1.length;index1++){
             if(idArray.includes(data1[index1]["match_id"])){
                 if(data1[index1].hasOwnProperty("batsman")){
@@ -76,6 +78,7 @@ export default function calculateStrikeRate(){
                 
             
         }
+        //creating a new object and pushing the strikerate of each batsman based on year
         for(let keys in object[key]){
             let totalballs=object[key][keys]['Balls']-object[key][keys]['Wide']
             let strikerate=(object[key][keys]['Runs']/totalballs)*100
