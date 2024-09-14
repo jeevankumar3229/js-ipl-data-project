@@ -1,7 +1,7 @@
 import matchesPerYear from "./1-matches-per-year.js";
 import fs from 'fs';
 export default function playerOfTheMatch(){
-    let output=matchesPerYear();
+    let output=matchesPerYear();//This function returns the year as object
     let object={};
     let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err,data)=>{if(err) console.log("Error")}));
     for(let key in output){
