@@ -9,6 +9,7 @@ export default function calculateEconomicalBowlers(){
     let sliceArray=[]
     let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
     let data1=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
+    //extracting all the match-IDs of season 2015
     for(let index4=0;index4<data.length;index4++){
         if(data[index4].hasOwnProperty("id") && data[index4].hasOwnProperty("season")){
             if(data[index4]['season']==='2015')
@@ -17,6 +18,7 @@ export default function calculateEconomicalBowlers(){
             }
         }
     }
+    //Adding Bowlers who played in 2015 to array
     for(let index=0;index<data1.length;index++){
         if(idArray.includes(data1[index]["match_id"])){
             if(data1[index].hasOwnProperty("bowler")){
@@ -29,6 +31,7 @@ export default function calculateEconomicalBowlers(){
             }
         }
     }
+    //Creating an object with bowler-nmae as key with properties as total balls faced,total runs,wide balls,noball balls
     for(let index1=0;index1<bowlers.length;index1++){
         object[bowlers[index1]]={}
         for(let index3=0;index3<data1.length;index3++){
@@ -74,14 +77,15 @@ export default function calculateEconomicalBowlers(){
             
         
     }
+    //creating an array of objects with ecah object has two properties name,rate
     for(let keys in object){
         let over=((object[keys]['Balls']-object[keys]['Wide']-object[keys]['Noball'])/6)//.toFixed(2);
         let economic=((object[keys]['Runs'])/over)//.toFixed(2)
         array.push({"name":keys,"rate":economic})
 
     }
-    array.sort((a, b) => a.rate-b.rate);
-    sliceArray=array.slice(0,10)
+    array.sort((a, b) => a.rate-b.rate);//sorting the array
+    sliceArray=array.slice(0,10)//slicing to get top 10
     return sliceArray;
     
 
