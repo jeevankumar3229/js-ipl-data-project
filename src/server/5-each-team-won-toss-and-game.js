@@ -5,6 +5,7 @@ export default function calculateTeamWonTossAndMatch(){
     for(let index=0;index<data.length;index++){
         if(data[index].hasOwnProperty("toss_winner") && data[index].hasOwnProperty("winner")){
             if(data[index]['toss_winner']=== data[index]['winner']){
+                //since dataset contains team name as Rising Pune Supergiants and Rising Pune Supergiant, so merging both into one
                 if(data[index]['winner']=== 'Rising Pune Supergiant' || data[index]['winner']=== 'Rising Pune Supergiants'){
                     let winner="Rising Pune Supergiants"
                     if(object.hasOwnProperty(winner))
