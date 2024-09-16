@@ -9,11 +9,22 @@ export default function matchesPerYearPerTeam(){
         for(let index=0;index<data.length;index++){
             if(data[index].hasOwnProperty("winner")){
                 if(data[index]["season"]===key){
-                    if(object[key].hasOwnProperty(data[index]["winner"])){
-                        object[key][data[index]["winner"]]++
+                    if(data[index]['winner']===""){
+                        let winner="Tie"
+                        if(object[key].hasOwnProperty(winner)){
+                            object[key][winner]++
+                        }
+                        else{
+                            object[key][winner]=1
+                        }
                     }
                     else{
-                        object[key][data[index]["winner"]]=1
+                        if(object[key].hasOwnProperty(data[index]["winner"])){
+                            object[key][data[index]["winner"]]++
+                        }
+                        else{
+                            object[key][data[index]["winner"]]=1
+                        }
                     }
                 }
             }
