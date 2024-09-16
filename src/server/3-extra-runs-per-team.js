@@ -1,30 +1,15 @@
 import fs from "fs"
 export default function extraRunsPerTeam(){
     let object={};
-    let idArray=[]
+    let filteredArray=[]
+    let matchID=[]
     let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
     let data1=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
-    for(let index=0;index<data.length;index++){
-        if(data[index].hasOwnProperty("season")){
-            if(data[index]['season']==='2016'){
-                let matchId=data[index]["id"]
-                for(let index1=0;index1<data1.length;index1++){
-                    if(data1[index1]["match_id"]=== matchId){
-                        if(data1[index].hasOwnProperty("bowling_team")){
-                            if(object.hasOwnProperty(data1[index1]["bowling_team"])){
-                                object[data1[index1]["bowling_team"]]=object[data1[index1]["bowling_team"]]+Number(data1[index1]["extra_runs"])
-                            }
-                            else{
-                                object[data1[index1]["bowling_team"]]= Number(data1[index1]["extra_runs"]) ;
-                            }
-                        }
-                    }
-                }
-            }
-            
-        }
-    }
+    matchID=data.filter((item)=> {if(item['season']==='2016') return item['id']}).map((item)=>item.id)
+    filteredArray = data1.filter((item)=> {if(matchID.includes(item['match_id'])) return item})
+    filteredArray.forEach((item)=>{
+        object[item['bowling_team']]= object.hasOwnProperty(item['bowling_team']) ? object[item['bowling_team']] + Number(item['extra_runs']) : Number(item['extra_runs']);
+    })
     return object;
-    
     
 }
