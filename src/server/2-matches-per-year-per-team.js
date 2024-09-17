@@ -1,10 +1,9 @@
 import matchesPerYear from "./1-matches-per-year.js";
 import fs from 'fs';
-export default function matchesPerYearPerTeam(){
+export default function matchesPerYearPerTeam(matchesData){
     let object={};
     let winner;
-    let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
-    data.forEach((item)=>{
+    matchesData.forEach((item)=>{
             if(item.hasOwnProperty('winner') && item.hasOwnProperty("season")){
                 winner= (item['winner']=== 'Rising Pune Supergiant' || item['winner']=== 'Rising Pune Supergiants') ? 'Rising Pune Supergiants' : (item['winner']==="" ? "Tie" : item['winner'])
                 if(object.hasOwnProperty(winner)){
