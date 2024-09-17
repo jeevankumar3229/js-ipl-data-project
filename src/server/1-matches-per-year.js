@@ -1,8 +1,7 @@
 import fs from "fs"
-export default function matchesPerYear(){
+export default function matchesPerYear(matchesData){
     let object={}
-    let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err,data)=>{if(err) console.log("Error")}));
-    data.forEach((item)=>{
+    matchesData.forEach((item)=>{
         if(item.hasOwnProperty("season")){
             object[item["season"]]= object.hasOwnProperty(item["season"]) ? object[item["season"]]+1 : 1;
         }
