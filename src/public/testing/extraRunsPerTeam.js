@@ -5,7 +5,7 @@ let deliveriesData=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-
 let output=extraRunsPerTeam(matchesData, deliveriesData)
 let jsondata=JSON.stringify(output,null,2)
 try{
-    fs.writeFile('./src/public/output/extraRunsPerTeam.json',jsondata,(err)=>{if(err)console.log(err.message)});
+    fs.writeFileSync('./src/public/output/extraRunsPerTeam.json',jsondata);
 }
 catch(Error){
     console.log(Error)

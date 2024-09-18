@@ -4,7 +4,7 @@ let matchesData=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(er
 let output=matchesPerYearPerTeam(matchesData)
 let jsondata=JSON.stringify(output,null,2)
 try{
-    fs.writeFile('./src/public/output/matchesPerYearPerTeam.json',jsondata,(err)=>{if(err)console.log(err.message)});
+    fs.writeFileSync('./src/public/output/matchesPerYearPerTeam.json',jsondata);
 }
 catch(Error){
     console.log(Error)
