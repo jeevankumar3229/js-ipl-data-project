@@ -1,7 +1,5 @@
-import fs from 'fs';
 export default function calculateStrikeRate(matchesData,deliveriesData){
     let object={};
-    let arrayOfObjects=[]
     let seasonArray=new Set()
     matchesData.forEach((item)=>{
         seasonArray.add(item['season'])

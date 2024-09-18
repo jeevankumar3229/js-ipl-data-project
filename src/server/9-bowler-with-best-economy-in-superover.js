@@ -1,10 +1,5 @@
-import fs from "fs"
 export default function calculateEconomicalBowlerInSuperOver(matchesData,deliveriesData){
     let object={};
-    let idArray=[]
-    let bowlers=[]
-    let array=[]
-    let sliceArray=[]
     let arrayOfObjects=[]
     let filteredData=deliveriesData.filter((item)=>{
         if(item['is_super_over']==='1'){
@@ -12,23 +7,23 @@ export default function calculateEconomicalBowlerInSuperOver(matchesData,deliver
         }
     })
     filteredData.forEach((item)=>{
-        if(item.hasOwnProperty("bowler") && object.hasOwnProperty(item['bowler'])){
-            if(object[item['bowler']].hasOwnProperty("Balls") && object[item['bowler']].hasOwnProperty("Runs")){
+        if(item.hasOwnProperty("bowler") && item.hasOwnProperty('ball') && item.hasOwnProperty('total_runs') && item.hasOwnProperty('legbye_runs') && item.hasOwnProperty('bye_runs') && item.hasOwnProperty('wide_runs') && item.hasOwnProperty('noball_runs')){
+            if(object.hasOwnProperty(item['bowler'])){
                 object[item['bowler']]["Balls"]=object[item['bowler']]["Balls"]+1
                 object[item['bowler']]["Runs"]=object[item['bowler']]["Runs"]+Number(item['total_runs'])-Number(item['bye_runs'])-Number(item['legbye_runs'])
                 if(Number(item['wide_runs'])>0 || Number(item['noball_runs'])>0){
                     object[item['bowler']]["Balls"]= object[item['bowler']]["Balls"] - 1
                 }
             }
-        }
-        else{
-            object[item['bowler']]={}
-            object[item['bowler']]["Balls"]=1
-            object[item['bowler']]["Runs"]=Number(item['total_runs'])-Number(item['bye_runs'])-Number(item['legbye_runs'])
-            if(Number(item['wide_runs'])>0 || Number(item['noball_runs'])>0){
-                object[item['bowler']]["Balls"]= object[item['bowler']]["Balls"] - 1
-            }
+            else{
+                object[item['bowler']]={}
+                object[item['bowler']]["Balls"]=1
+                object[item['bowler']]["Runs"]=Number(item['total_runs'])-Number(item['bye_runs'])-Number(item['legbye_runs'])
+                if(Number(item['wide_runs'])>0 || Number(item['noball_runs'])>0){
+                    object[item['bowler']]["Balls"]= object[item['bowler']]["Balls"] - 1
+                }
 
+            }
         }
     })
     for(let keys in object){

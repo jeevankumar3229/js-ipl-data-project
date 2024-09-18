@@ -1,8 +1,5 @@
-import fs from "fs"
 export default function calculateNoOfTimesDismissed(deliveriesData){
-    let bowlerArray=[]
     let filteredArray=[]
-    let object1={}
     let object={}
     
     filteredArray=deliveriesData.filter((item)=>{

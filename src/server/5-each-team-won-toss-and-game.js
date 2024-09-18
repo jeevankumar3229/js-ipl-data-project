@@ -1,4 +1,3 @@
-import fs from "fs"
 export default function calculateTeamWonTossAndMatch(matchesData){
     let object={};
     let winner;

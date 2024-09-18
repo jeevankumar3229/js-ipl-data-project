@@ -1,5 +1,3 @@
-import matchesPerYear from "./1-matches-per-year.js";
-import fs from 'fs';
 export default function matchesPerYearPerTeam(matchesData){
     let object={};
     let winner;

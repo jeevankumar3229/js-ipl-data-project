@@ -1,4 +1,3 @@
-import fs from "fs"
 export default function matchesPerYear(matchesData){
     let object={}
     matchesData.forEach((item)=>{
