@@ -1,86 +1,42 @@
 import fs from "fs"
-export default function calculateEconomicalBowlerInSuperOver(){
+export default function calculateEconomicalBowlerInSuperOver(matchesData,deliveriesData){
     let object={};
     let idArray=[]
     let bowlers=[]
     let array=[]
     let sliceArray=[]
-    let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
-    let data1=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
-    //pushing match id to array whose reult is tie
-    for(let index4=0;index4<data.length;index4++){
-        if(data[index4].hasOwnProperty("id") && data[index4].hasOwnProperty("result")){
-            if(data[index4]['result']=== 'tie')
-            {
-                idArray.push(data[index4]["id"])
-            }
+    let arrayOfObjects=[]
+    let filteredData=deliveriesData.filter((item)=>{
+        if(item['is_super_over']==='1'){
+            return item
         }
-    }
-    //pushing the names of the bowler to array who played in super over
-    for(let index=0;index<data1.length;index++){
-        if(idArray.includes(data1[index]["match_id"])){
-            if(data1[index].hasOwnProperty("bowler")){
-                if(data1[index]['inning']==='3' || data1[index]['inning']==='4'){
-                    if(bowlers.includes(data1[index]['bowler'])){
-                        continue
-                    }
-                    else{
-                        bowlers.push(data1[index]['bowler'])
-                    }
+    })
+    filteredData.forEach((item)=>{
+        if(item.hasOwnProperty("bowler") && object.hasOwnProperty(item['bowler'])){
+            if(object[item['bowler']].hasOwnProperty("Balls") && object[item['bowler']].hasOwnProperty("Runs")){
+                object[item['bowler']]["Balls"]=object[item['bowler']]["Balls"]+1
+                object[item['bowler']]["Runs"]=object[item['bowler']]["Runs"]+Number(item['total_runs'])-Number(item['bye_runs'])-Number(item['legbye_runs'])
+                if(Number(item['wide_runs'])>0 || Number(item['noball_runs'])>0){
+                    object[item['bowler']]["Balls"]= object[item['bowler']]["Balls"] - 1
                 }
             }
         }
-    }
-    for(let index1=0;index1<bowlers.length;index1++){
-        object[bowlers[index1]]={}
-        for(let index3=0;index3<data1.length;index3++){
-            if(idArray.includes(data1[index3]["match_id"])){
-                if(data1[index3].hasOwnProperty("bowler")){
-                    if(data1[index3]["bowler"]=== bowlers[index1] && (data1[index3]['inning']==='3' || data1[index3]['inning']==='4')){
-                        if(object[bowlers[index1]].hasOwnProperty("Balls") && object[bowlers[index1]].hasOwnProperty("Runs")){
-                            object[bowlers[index1]]["Balls"]=object[bowlers[index1]]["Balls"]+1
-                            object[bowlers[index1]]["Runs"]=object[bowlers[index1]]["Runs"]+Number(data1[index3]['total_runs'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
-                            if(Number(data1[index3]['wide_runs'])>0){
-                                object[bowlers[index1]]["Wide"]=object[bowlers[index1]]["Wide"]+1
-                            }
-                            if(Number(data1[index3]['noball_runs'])>0){
-                                object[bowlers[index1]]['Noball']=object[bowlers[index1]]['Noball']+1
-                            }
-                        }
-                        else{
-                            object[bowlers[index1]]["Balls"]=1
-                            object[bowlers[index1]]["Runs"]=Number(data1[index3]['total_runs'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
-                            if(Number(data1[index3]['wide_runs'])>0){
-                                object[bowlers[index1]]["Wide"]=1
-                            }
-                            else{
-                                object[bowlers[index1]]["Wide"]=Number(data1[index3]['wide_runs'])
-                            }
-                            if(Number(data1[index3]['noball_runs'])>0){
-                                object[bowlers[index1]]["Noball"]=1
-                            }
-                            else{
-                                object[bowlers[index1]]['Noball']=Number(data1[index3]['noball_runs'])
-
-                            }
-
-                        }
-                    }
-                    
-                    
-                }
+        else{
+            object[item['bowler']]={}
+            object[item['bowler']]["Balls"]=1
+            object[item['bowler']]["Runs"]=Number(item['total_runs'])-Number(item['bye_runs'])-Number(item['legbye_runs'])
+            if(Number(item['wide_runs'])>0 || Number(item['noball_runs'])>0){
+                object[item['bowler']]["Balls"]= object[item['bowler']]["Balls"] - 1
             }
-        }  
-    }
-    //craeting an array of objects with object properties as name and rate
+
+        }
+    })
     for(let keys in object){
-        let over=((object[keys]['Balls']-object[keys]['Wide']-object[keys]['Noball'])/6)//.toFixed(2);
-        let economic=((object[keys]['Runs'])/over)//.toFixed(2)
-        array.push({"name":keys,"rate":economic})
+        let over=((object[keys]['Balls'])/6)
+        let economic=((object[keys]['Runs'])/over)
+        arrayOfObjects.push({"name":keys,"rate":economic})
 
     }
-    array.sort((a, b) => a.rate-b.rate);//sorting the array of objects
-    sliceArray=array.slice(0,1)//slicing
-    return sliceArray;
-
+    return arrayOfObjects.sort((a, b) => a.rate-b.rate).slice(0,1);
+   
 }
