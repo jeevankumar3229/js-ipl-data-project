@@ -16,11 +16,11 @@ export default function playerOfTheMatch(matchesData){
     let filteredObject=Object.entries(object).map(([season,players])=>{
         let innerOutput=Object.entries(players).reduce((acc,[playername,count])=>{
             if(acc["Count"] < count){
-                acc["Count"]=count
-                acc["playerName"]=playername
+                acc["PlayerOfMatchCount"]=count
+                acc["Name"]=playername
             }
             return acc;
-        },{"playerName":"","Count":0})
+        },{"Name":"","PlayerOfMatchCount":0})
         return [season,innerOutput]
     })
     return Object.fromEntries(filteredObject)
