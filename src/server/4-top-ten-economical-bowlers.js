@@ -3,7 +3,7 @@ export default function calculateEconomicalBowlers(matchesData,deliveriesData,se
 
     let object={};
     let object1={}
-    let bowlers=[]
+    let bowlers= new Set()
     let sliceArray=[]
     let arrayOfObjects=[]
     let idArray= matchesData.reduce((acc,item)=>{
@@ -12,11 +12,6 @@ export default function calculateEconomicalBowlers(matchesData,deliveriesData,se
         }
     return acc;},[])
     let filteredArray=deliveriesData.filter(item => idArray.includes(item["match_id"]))
-    filteredArray.forEach(item=> {
-        if (item.hasOwnProperty("bowler") && !bowlers.includes(item['bowler'])) {
-            bowlers.push(item['bowler']);
-        }
-    });
 
     filteredArray.forEach((item)=>{
         if(item.hasOwnProperty("bowler") && object.hasOwnProperty(item['bowler'])){
