@@ -17,11 +17,11 @@ function convertingCsvToJson(){
     });
 
 
-    csvFilePath1='./src/data/deliveries.csv'
-    jsonFilePath1='./src/data/deliveries.json'
-    csv().fromFile(csvFilePath1).then((jsonObj) => {
+    csvFilePath='./src/data/deliveries.csv'
+    jsonFilePath='./src/data/deliveries.json'
+    csv().fromFile(csvFilePath).then((jsonObj) => {
         try{
-            fs.writeFileSync(jsonFilePath1, JSON.stringify(jsonObj,null,2));
+            fs.writeFileSync(jsonFilePath, JSON.stringify(jsonObj,null,2));
         }
         catch(Error){
             console.log(Error)
