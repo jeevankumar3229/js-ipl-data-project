@@ -1,20 +1,16 @@
-import fs from "fs"
-export default function matchesPerYear(){
-    let object={};
-    let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err,data)=>{if(err) console.log("Error")}));
-    for(let index=0;index<data.length;index++){
-        if(data[index].hasOwnProperty("season")){
-            if(object.hasOwnProperty([data[index]["season"]]))
+export default function matchesPerYear(matchesData){
+    let matchesPerYearData={};
+    for(let index=0;index<matchesData.length;index++){
+        if(matchesData[index].hasOwnProperty("season")){
+            if(matchesPerYearData.hasOwnProperty([matchesData[index]["season"]]))
             {
-                object[data[index]["season"]]++;
+                matchesPerYearData[matchesData[index]["season"]]++;
             }
             else{
-                object[data[index]["season"]]=1;
+                matchesPerYearData[matchesData[index]["season"]]=1;
             }
         }
     }
-    return object;
-    
-
+    return matchesPerYearData;
 }
 
