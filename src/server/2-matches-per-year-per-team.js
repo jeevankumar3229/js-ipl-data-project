@@ -13,7 +13,7 @@ export default function matchesPerYearPerTeam(matchesData){
                             matchesPerYearPerTeamData[key][winner]++
                         }
                         else{
-                            matchesPerYearPerTeamData[key][winner]=1
+                            matchesPerYearPerTeamData[key][winner]=1//if the matchesPerYearPerTeamData[key] doesnot contain the team name as a property, initialize it to value 1
                         }
                     }
                     else{
