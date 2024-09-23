@@ -1,11 +1,11 @@
 //This function returns the data of no of runs conceded per team in year 2016
-export default function extraRunsPerTeam(matchesData, deliveriesData) {
+export default function extraRunsPerTeam(matchesData, deliveriesData, season ='2016') {
     try {
         let extraRunsPerTeamData = {};
         for (let index = 0; index < matchesData.length; index++) {
             if (matchesData[index].hasOwnProperty("season")) {
-                if (data[index]['season'] === '2016') {
-                    let matchId = data[index]["id"]
+                if (matchesData[index]['season'] === season) {
+                    let matchId = matchesData[index]["id"]
                     for (let index1 = 0; index1 < deliveriesData.length; index1++) {
                         if (deliveriesData[index1]["match_id"] === matchId) {//checking if match ids are same
                             if (deliveriesData[index].hasOwnProperty("bowling_team")) {
