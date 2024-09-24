@@ -1,11 +1,7 @@
 import playerOfTheMatch from "../../server/6-highest-no-of-times-player-of-the-match.js";
-import fs from "fs";
-let matchesData=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err,data)=>{if(err) console.log("Error")}));
-let output= playerOfTheMatch(matchesData)
-let jsondata=JSON.stringify(output,null,2)
-try{
-    fs.writeFile('./src/public/output/playerOfTheMatch.json',jsondata,(err)=>{if(err)console.log(err.message)});
-}
-catch(Error){
-    console.log(Error)
-}
+import readingData from "./readingMatchesData.js";
+import writingData from "./writingData.js";
+let matchesData = readingData()//calling the function to read matches data
+let output = playerOfTheMatch(matchesData)//this function returns the highest no of times single player won man of the match
+let jsondata = JSON.stringify(output, null, 2)
+writingData('./src/public/output/playerOfTheMatch.json', jsondata)//calling function to write data to json file
