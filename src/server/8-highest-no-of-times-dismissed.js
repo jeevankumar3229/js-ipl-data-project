@@ -15,7 +15,7 @@ export default function calculateNoOfTimesDismissed(deliveriesData) {
         //noOfTimesDismissedData object contains keys as bowler name and value as nested object, nested object contains batsman name as key and value as no of times dismissed
         noOfTimesDismissedData = filteredDeliveriesData.reduce((acc, item) => {
             if (item.hasOwnProperty("bowler") && item.hasOwnProperty('batsman')) {
-                if (noOfTimesDismissedData.hasOwnProperty(item['bowler'])) {
+                if (acc.hasOwnProperty(item['bowler'])) {
                     if (acc[item['bowler']].hasOwnProperty(item['batsman'])) {
                         acc[item['bowler']][item['batsman']] = acc[item['bowler']][item['batsman']] + 1
                     }
@@ -43,7 +43,6 @@ export default function calculateNoOfTimesDismissed(deliveriesData) {
             }, { "Name": "", "dismissedCount": 0 })
             return [ballerName, innerObject]
         })
-
 
         //highestNoOfTimesDismissedData array contains the array of array  of length 1 where second element of nested array is a object
         let highestNoOfTimesDismissedData = filteredNoOfTimesDismissedData.reduce((acc, [ballername, batsmanDetails]) => {
