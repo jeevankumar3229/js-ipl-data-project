@@ -1,92 +1,76 @@
-import fs from "fs"
-export default function calculateEconomicalBowlers(){
-
-    let object={};
-    let object1={}
-    let idArray=[]
-    let bowlers=[]
-    let array=[]
-    let sliceArray=[]
-    let data=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
-    let data1=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
-    //extracting all the match-IDs of season 2015
-    for(let index4=0;index4<data.length;index4++){
-        if(data[index4].hasOwnProperty("id") && data[index4].hasOwnProperty("season")){
-            if(data[index4]['season']==='2015')
-            {
-                idArray.push(data[index4]["id"])
-            }
-        }
-    }
-    //Adding Bowlers who played in 2015 to array
-    for(let index=0;index<data1.length;index++){
-        if(idArray.includes(data1[index]["match_id"])){
-            if(data1[index].hasOwnProperty("bowler")){
-                if(bowlers.includes(data1[index]['bowler'])){
-                    continue
-                }
-                else{
-                    bowlers.push(data1[index]['bowler'])
+//This function will return the top 10 economical bowlers in season 2015
+export default function calculateEconomicalBowlers(matchesData, deliveriesData, season = '2015') {
+    try {
+        let bowlersData = {};
+        let matchIDArray = []
+        let bowlersArray = []
+        //extracting all the match-IDs of season 2015
+        for (let index = 0; index < matchesData.length; index++) {
+            if (matchesData[index].hasOwnProperty("id") && matchesData[index].hasOwnProperty("season")) {
+                if (matchesData[index]['season'] === season) {
+                    matchIDArray.push(matchesData[index]["id"])
                 }
             }
         }
-    }
-    //Creating an object with bowler-nmae as key with properties as total balls faced,total runs,wide balls,noball balls
-    for(let index1=0;index1<bowlers.length;index1++){
-        object[bowlers[index1]]={}
-        for(let index3=0;index3<data1.length;index3++){
-            if(idArray.includes(data1[index3]["match_id"])){
-                if(data1[index3].hasOwnProperty("bowler")){
-                    if(data1[index3]["bowler"]=== bowlers[index1]){
-                        if(object[bowlers[index1]].hasOwnProperty("Balls") && object[bowlers[index1]].hasOwnProperty("Runs")){
-                            object[bowlers[index1]]["Balls"]=object[bowlers[index1]]["Balls"]+1
-                            object[bowlers[index1]]["Runs"]=object[bowlers[index1]]["Runs"]+Number(data1[index3]['total_runs'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
-                            if(Number(data1[index3]['wide_runs'])>0){
-                                object[bowlers[index1]]["Wide"]=object[bowlers[index1]]["Wide"]+1
+        //Adding Bowlers who played in 2015 to array
+        for (let index = 0; index < deliveriesData.length; index++) {
+            if (matchIDArray.includes(deliveriesData[index]["match_id"])) {
+                if (deliveriesData[index].hasOwnProperty("bowler")) {
+                    if (bowlersArray.includes(deliveriesData[index]['bowler'])) {
+                        continue
+                    }
+                    else {
+                        bowlersArray.push(deliveriesData[index]['bowler'])
+                    }
+                }
+            }
+        }
+        //Creating an bowlersData object with bowler-name as key with properties as total balls faced and total runs
+        for (let index = 0; index < bowlersArray.length; index++) {
+            bowlersData[bowlersArray[index]] = {}
+            for (let index1 = 0; index1 < deliveriesData.length; index1++) {
+                if (matchIDArray.includes(deliveriesData[index1]["match_id"])) {
+                    if (deliveriesData[index1].hasOwnProperty("bowler") && deliveriesData[index1].hasOwnProperty('ball') && deliveriesData[index1].hasOwnProperty('total_runs') && deliveriesData[index1].hasOwnProperty('legbye_runs') && deliveriesData[index1].hasOwnProperty('bye_runs') && deliveriesData[index1].hasOwnProperty('wide_runs') && deliveriesData[index1].hasOwnProperty('noball_runs')) {
+                        if (deliveriesData[index1]['bowler'] === bowlersArray[index]) {
+                            if (bowlersData[bowlersArray[index]].hasOwnProperty('Balls')) {
+                                bowlersData[bowlersArray[index]]["Balls"] = bowlersData[bowlersArray[index]]["Balls"] + 1
+                                bowlersData[bowlersArray[index]]["Runs"] = bowlersData[bowlersArray[index]]["Runs"] + Number(deliveriesData[index1]['total_runs']) - Number(deliveriesData[index1]['bye_runs']) - Number(deliveriesData[index1]['legbye_runs'])
+                                if (Number(deliveriesData[index1]['wide_runs']) > 0 || Number(deliveriesData[index1]['noball_runs']) > 0) {
+                                    bowlersData[bowlersArray[index]]["Balls"] = bowlersData[bowlersArray[index]]["Balls"] - 1
+                                }
                             }
-                            if(Number(data1[index3]['noball_runs'])>0){
-                                object[bowlers[index1]]['Noball']=object[bowlers[index1]]['Noball']+1
-                            }
-                        }
-                        else{
-                            object[bowlers[index1]]["Balls"]=1
-                            object[bowlers[index1]]["Runs"]=Number(data1[index3]['total_runs'])-Number(data1[index3]['bye_runs'])-Number(data1[index3]['legbye_runs'])
-                            if(Number(data1[index3]['wide_runs'])>0){
-                                object[bowlers[index1]]["Wide"]=1
-                            }
-                            else{
-                                object[bowlers[index1]]["Wide"]=Number(data1[index3]['wide_runs'])
-                            }
-                            if(Number(data1[index3]['noball_runs'])>0){
-                                object[bowlers[index1]]["Noball"]=1
-                            }
-                            else{
-                                object[bowlers[index1]]['Noball']=Number(data1[index3]['noball_runs'])
+                            else {
+                                bowlersData[bowlersArray[index]]["Balls"] = 1
+                                bowlersData[bowlersArray[index]]["Runs"] = Number(deliveriesData[index1]['total_runs']) - Number(deliveriesData[index1]['bye_runs']) - Number(deliveriesData[index1]['legbye_runs'])
+                                if (Number(deliveriesData[index1]['wide_runs']) > 0 || Number(deliveriesData[index1]['noball_runs']) > 0) {
+                                    bowlersData[bowlersArray[index]]["Balls"] = bowlersData[bowlersArray[index]]["Balls"] - 1
+                                }
 
                             }
-
                         }
                     }
-                    
-                    
                 }
             }
-        }
-                
-                
-            
-        
-    }
-    //creating an array of objects with ecah object has two properties name,rate
-    for(let keys in object){
-        let over=((object[keys]['Balls']-object[keys]['Wide']-object[keys]['Noball'])/6)//.toFixed(2);
-        let economic=((object[keys]['Runs'])/over)//.toFixed(2)
-        array.push({"name":keys,"rate":economic})
 
+
+
+
+        }
+        bowlersArray = []
+        //creating an array of bowlers data as array of objects with each bowlers has two properties name,rate
+        for (let keys in bowlersData) {
+            let over = ((bowlersData[keys]['Balls']) / 6)//.toFixed(2);
+            let economic = ((bowlersData[keys]['Runs']) / over)//.toFixed(2)
+            bowlersArray.push({ "name": keys, "rate": economic })
+
+        }
+        bowlersArray.sort((a, b) => a.rate - b.rate);//sorting the array
+        bowlersArray = bowlersArray.slice(0, 10)//slicing to get top 10
+        return bowlersArray;
     }
-    array.sort((a, b) => a.rate-b.rate);//sorting the array
-    sliceArray=array.slice(0,10)//slicing to get top 10
-    return sliceArray;
-    
+    catch (Error) {
+        console.log(Error)
+    }
+
 
 }
