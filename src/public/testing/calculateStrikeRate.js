@@ -1,12 +1,9 @@
 import calculateStrikeRate from "../../server/7-strike-rate-of-batsman.js";
-import fs from "fs";
-let matchesData=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
-let deliveriesData=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
-let output= calculateStrikeRate(matchesData,deliveriesData)
+import readingDeliveriesData from "./readingDeliveriesData.js";
+import readingData from "./readingMatchesData.js";
+import writingData from "./writingData.js";
+let matchesData= readingData()//calling function to read matches data
+let deliveriesData= readingDeliveriesData()//calling function to read deliveries data
+let output= calculateStrikeRate(matchesData,deliveriesData)//this function returns the strike rate of batsman in each season
 let jsondata=JSON.stringify(output,null,2)
-try{
-    fs.writeFileSync('./src/public/output/batsmanStrikeRate.json',jsondata);
-}
-catch(Error){
-    console.log(Error)
-}
+writingData('./src/public/output/batsmanStrikeRate.json',jsondata)//calking function to write data to json file
