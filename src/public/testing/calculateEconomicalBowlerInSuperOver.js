@@ -1,12 +1,8 @@
 import calculateEconomicalBowlerInSuperOver from "../../server/9-bowler-with-best-economy-in-superover.js";
-import fs from "fs";
-let matchesData=JSON.parse(fs.readFileSync('./src/data/matches.json','utf-8',(err)=>{if(err) console.log("Error")}));
-let deliveriesData=JSON.parse(fs.readFileSync('./src/data/deliveries.json','utf-8',(err)=>{if(err) console.log("Error")}));
-let output= calculateEconomicalBowlerInSuperOver(matchesData,deliveriesData)
+import readingData from "./readingMatchesData.js";
+import readingDeliveriesData from "./readingDeliveriesData.js";
+import writingData from "./writingData.js";
+let deliveriesData= readingDeliveriesData()//calling function to read deliveries data
+let output= calculateEconomicalBowlerInSuperOver(deliveriesData)//this function returns the data of economical rate of bowlers in super over
 let jsondata=JSON.stringify(output,null,2)
-try{
-    fs.writeFileSync('./src/public/output/economicalBowlersInSuperOver.json',jsondata);
-}
-catch(Error){
-    console.log(Error)
-}
+writingData('./src/public/output/economicalBowlersInSuperOver.json',jsondata)//calling function to write data to json file
