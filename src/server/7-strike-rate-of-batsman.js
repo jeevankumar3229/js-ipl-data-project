@@ -1,3 +1,4 @@
+//This function calculates the strike rate of batsman in each season
 export default function calculateStrikeRate(matchesData, deliveriesData) {
     try {
         let batsmanStrikeRateData = {};
