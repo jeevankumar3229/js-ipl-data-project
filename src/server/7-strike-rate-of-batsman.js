@@ -1,4 +1,5 @@
 //This function calculates the strike rate of batsman in each season
+import writingData from "../public/testing/writingData.js";
 export default function calculateStrikeRate(matchesData, deliveriesData) {
     try {
         let batsmanStrikeRateData = {};
@@ -44,15 +45,15 @@ export default function calculateStrikeRate(matchesData, deliveriesData) {
                 return acc;
             }, {})
             //Iterating through batsmanDataForEachSeason object get strikerate and assign to object where season is a key and value being nested object with key being playerName and value being strikerate
-            for (let keys in batsmanDataForEachSeason) {
-                let totalballs = batsmanDataForEachSeason[keys]['Balls']
-                let strikerate = (batsmanDataForEachSeason[keys]['Runs'] / totalballs) * 100
-                acc[season][keys] = strikerate;
+            for (let batsmanName in batsmanDataForEachSeason) {
+                let totalballs = batsmanDataForEachSeason[batsmanName]['Balls']
+                let strikerate = (batsmanDataForEachSeason[batsmanName]['Runs'] / totalballs) * 100
+                acc[season][batsmanName] = strikerate;
 
             }
             return acc;
         }, {})
-        return batsmanStrikeRateData
+        writingData('./src/public/output/batsmanStrikeRate.json',JSON.stringify(batsmanStrikeRateData,null,2))//calking function to write data to json file
     }
     catch (Error) {
         console.log(Error)

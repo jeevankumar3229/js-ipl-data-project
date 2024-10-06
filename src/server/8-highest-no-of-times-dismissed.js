@@ -1,4 +1,5 @@
 //this function calculates the data of the player dismissed multiple times by the same player
+import writingData from "../public/testing/writingData.js";
 export default function calculateNoOfTimesDismissed(deliveriesData) {
     try {
         let filteredDeliveriesData = []
@@ -54,8 +55,7 @@ export default function calculateNoOfTimesDismissed(deliveriesData) {
             }
             return acc;
         }, [["", { "name": "", "dismissedCount": 0 }]])
-
-        return Object.fromEntries(highestNoOfTimesDismissedData)
+        writingData('./src/public/output/highestNoOfTimesDismissed.json',JSON.stringify(Object.fromEntries(highestNoOfTimesDismissedData),null,2))//calling function to write data to the json file
     }
     catch (Error) {
         console.log(Error)

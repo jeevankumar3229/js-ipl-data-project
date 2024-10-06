@@ -1,4 +1,5 @@
 //this function calculates the data of economical rate of bowlers in super over
+import writingData from "../public/testing/writingData.js";
 export default function calculateEconomicalBowlerInSuperOver(deliveriesData) {
     try {
         let economicalRateOfBowlersInSuperOver = {};
@@ -38,7 +39,8 @@ export default function calculateEconomicalBowlerInSuperOver(deliveriesData) {
             economicalRateOfBowlersInSuperOverArrayOfObjects.push({ "name": bowlerName, "rate": economic })
 
         }
-        return economicalRateOfBowlersInSuperOverArrayOfObjects.sort((a, b) => a.rate - b.rate).slice(0, 1);
+        writingData('./src/public/output/economicalBowlersInSuperOver.json',JSON.stringify(economicalRateOfBowlersInSuperOverArrayOfObjects.sort((a, b) => a.rate - b.rate).slice(0, 1),null,2))//calling function to write data to json file
+    
     }
     catch (Error) {
         console.log(Error)

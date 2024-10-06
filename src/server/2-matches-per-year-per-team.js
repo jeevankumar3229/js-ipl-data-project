@@ -1,3 +1,5 @@
+
+import writingData from "../public/testing/writingData.js";
 export default function matchesPerYearPerTeam(matchesData) {
     try {
         let matchesPerYearPerTeamData = {};
@@ -16,7 +18,7 @@ export default function matchesPerYearPerTeam(matchesData) {
             }
             return acc;
         }, {});
-        return matchesPerYearPerTeamData;
+        writingData('./src/public/output/matchesPerYearPerTeam.json', JSON.stringify(matchesPerYearPerTeamData,null,2));//calling writingData function to write data to json file
     }
     catch (Error) {
         console.log(Error)

@@ -1,4 +1,5 @@
 //this function returns the highest no of times single player won man of the match
+import writingData from "../public/testing/writingData.js";
 export default function playerOfTheMatch(matchesData) {
     try {
         let noOfTimesPlayerOfMatchData = {};
@@ -26,7 +27,8 @@ export default function playerOfTheMatch(matchesData) {
             }, { "name": "", "playerOfMatchCount": 0 })
             return [season, innerObject]
         })
-        return Object.fromEntries(highestNoOfTimesPlayerOfMatchData)
+        writingData('./src/public/output/playerOfTheMatch.json', JSON.stringify(Object.fromEntries(highestNoOfTimesPlayerOfMatchData),null,2))//calling function to write data to json file
+
     }
     catch (Error) {
         console.log(Error)

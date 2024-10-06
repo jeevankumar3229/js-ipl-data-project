@@ -1,4 +1,5 @@
 //This function returns the data of top 10 economical bowlers in season 2015
+import writingData from "../public/testing/writingData.js";
 export default function calculateEconomicalBowlers(matchesData, deliveriesData, season = '2015') {
     try {
         let bowlersData = {};
@@ -36,13 +37,13 @@ export default function calculateEconomicalBowlers(matchesData, deliveriesData, 
             return acc;
         }, {})
         //iterating through bowlers data to get economical rate and push an object with properties as keys and rate to array
-        for (let keys in bowlersData) {
-            let over = ((bowlersData[keys]['Balls']) / 6)
-            let economic = ((bowlersData[keys]['Runs']) / over)
-            economicalRateOfBowlers.push({ "name": keys, "rate": economic })
+        for (let bowlerName in bowlersData) {
+            let over = ((bowlersData[bowlerName]['Balls']) / 6)
+            let economic = ((bowlersData[bowlerName]['Runs']) / over)
+            economicalRateOfBowlers.push({ "name": bowlerName, "rate": economic })
 
         }
-        return economicalRateOfBowlers.sort((a, b) => a.rate - b.rate).slice(0, 10);
+        writingData('./src/public/output/economicalBowlers.json', JSON.stringify(economicalRateOfBowlers.sort((a, b) => a.rate - b.rate).slice(0, 10), null, 2))//calling function to write data in jsonfile
     }
     catch (Error) {
         console.log(Error)
