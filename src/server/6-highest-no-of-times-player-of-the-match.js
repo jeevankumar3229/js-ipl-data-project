@@ -24,15 +24,15 @@ export default function playerOfTheMatch(matchesData) {
         //converting previously created object with value being nested object with mutliple key value pairs to single key value pairs
         let highestPlayerOfMatchCount = 0;
         let playerName = "";
-        for (let key1 in noOfTimesPlayerOfMatchData) {
-            for (let key2 in noOfTimesPlayerOfMatchData[key1]) {
-                if (highestPlayerOfMatchCount < noOfTimesPlayerOfMatchData[key1][key2]) {
-                    highestPlayerOfMatchCount = noOfTimesPlayerOfMatchData[key1][key2]
-                    playerName = key2
+        for (let season in noOfTimesPlayerOfMatchData) {
+            for (let batsmanName in noOfTimesPlayerOfMatchData[season]) {
+                if (highestPlayerOfMatchCount < noOfTimesPlayerOfMatchData[season][batsmanName]) {
+                    highestPlayerOfMatchCount = noOfTimesPlayerOfMatchData[season][batsmanName]
+                    playerName = batsmanName
                 }
 
             }
-            noOfTimesPlayerOfMatchData[key1] = { "name": playerName, "playerOfMatchCount": highestPlayerOfMatchCount }
+            noOfTimesPlayerOfMatchData[season] = { "name": playerName, "playerOfMatchCount": highestPlayerOfMatchCount }
             highestPlayerOfMatchCount = 0;
         }
         writingData('./src/public/output/playerOfTheMatch.json', JSON.stringify(noOfTimesPlayerOfMatchData,null,2))//calling function to write data to json file

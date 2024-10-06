@@ -59,10 +59,10 @@ export default function calculateEconomicalBowlers(matchesData, deliveriesData, 
         }
         bowlersArray = []
         //creating an array of bowlers data as array of objects with each bowlers has two properties name,rate
-        for (let keys in bowlersData) {
-            let over = ((bowlersData[keys]['Balls']) / 6)//.toFixed(2);
-            let economic = ((bowlersData[keys]['Runs']) / over)//.toFixed(2)
-            bowlersArray.push({ "name": keys, "rate": economic })
+        for (let bowlerName in bowlersData) {
+            let over = ((bowlersData[bowlerName]['Balls']) / 6)//.toFixed(2);
+            let economic = ((bowlersData[bowlerName]['Runs']) / over)//.toFixed(2)
+            bowlersArray.push({ "name": bowlerName, "rate": economic })
 
         }
         bowlersArray.sort((a, b) => a.rate - b.rate);//sorting the array

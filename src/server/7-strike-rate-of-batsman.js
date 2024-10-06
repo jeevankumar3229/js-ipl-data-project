@@ -59,10 +59,10 @@ export default function calculateStrikeRate(matchesData, deliveriesData) {
 
             }
             //modifying the object created for each batsman by replacing the object with strikerate value
-            for (let keys in batsmanStrikeRateData[key]) {
-                let totalballs = batsmanStrikeRateData[key][keys]['Balls']
-                let strikerate = (batsmanStrikeRateData[key][keys]['Runs'] / totalballs) * 100
-                batsmanStrikeRateData[key][keys] = strikerate;
+            for (let batsmanName in batsmanStrikeRateData[key]) {
+                let totalballs = batsmanStrikeRateData[key][batsmanName]['Balls']
+                let strikerate = (batsmanStrikeRateData[key][batsmanName]['Runs'] / totalballs) * 100
+                batsmanStrikeRateData[key][batsmanName] = strikerate;
 
             }
         }
