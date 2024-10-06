@@ -1,8 +1,9 @@
 //This function calculates the strike rate of batsman in each season
-import matchesPerYear from "./1-matches-per-year.js";
+import writingData from "../public/testing/writingData.js";
+import fs from 'fs';
 export default function calculateStrikeRate(matchesData, deliveriesData) {
     try {
-        let seasonListData = matchesPerYear(matchesData);//This functions returns the object with year as key
+        let seasonListData = JSON.parse(fs.readFileSync('./src/public/output/matchesPerYear.json')); 
         let batsmanStrikeRateData = {};
         for (let key in seasonListData) {
             batsmanStrikeRateData[key] = {}
@@ -65,7 +66,7 @@ export default function calculateStrikeRate(matchesData, deliveriesData) {
 
             }
         }
-        return batsmanStrikeRateData;
+        writingData('./src/public/output/batsmanStrikeRate.json',JSON.stringify(batsmanStrikeRateData,null,2))//calking function to write data to json file
     }
     catch (Error) {
         console.log(Error)

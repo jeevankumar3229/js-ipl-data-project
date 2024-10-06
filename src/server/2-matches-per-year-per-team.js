@@ -1,7 +1,8 @@
-import matchesPerYear from "./1-matches-per-year.js";
+import fs from 'fs'
+import writingData from '../public/testing/writingData.js';
 export default function matchesPerYearPerTeam(matchesData) {
     try {
-        let matchesPerYearData = matchesPerYear(matchesData); // calling function which returns the object in the form of no of matches played per year
+        let matchesPerYearData = JSON.parse(fs.readFileSync('./src/public/output/matchesPerYear.json')); 
         let matchesPerYearPerTeamData = {};
         for (let key in matchesPerYearData) {
             matchesPerYearPerTeamData[key] = {}
@@ -18,18 +19,18 @@ export default function matchesPerYearPerTeam(matchesData) {
                             }
                         }
                         else {
-                            if (matchesPerYearPerTeamData[key].hasOwnProperty(data[index]["winner"])) {
-                                matchesPerYearPerTeamData[key][data[index]["winner"]]++
+                            if (matchesPerYearPerTeamData[key].hasOwnProperty(matchesData[index]["winner"])) {
+                                matchesPerYearPerTeamData[key][matchesData[index]["winner"]]++
                             }
                             else {
-                                matchesPerYearPerTeamData[key][data[index]["winner"]] = 1
+                                matchesPerYearPerTeamData[key][matchesData[index]["winner"]] = 1
                             }
                         }
                     }
                 }
             }
         }
-        return matchesPerYearPerTeamData;
+        writingData('./src/public/output/matchesPerYearPerTeam.json', JSON.stringify(matchesPerYearPerTeamData,null,2));//calling writingData function to write data to json file
     }
     catch (Error) {
         console.log(Error)

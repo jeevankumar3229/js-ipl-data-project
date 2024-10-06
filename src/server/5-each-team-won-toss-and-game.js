@@ -1,4 +1,5 @@
 //This function returns the data of no of times the team won the toss and game
+import writingData from "../public/testing/writingData.js";
 export default function calculateTeamWonTossAndMatch(matchesData) {
     try {
         let TeamWonTossAndMatchData = {};
@@ -26,7 +27,7 @@ export default function calculateTeamWonTossAndMatch(matchesData) {
                 }
             }
         }
-        return TeamWonTossAndMatchData;
+        writingData('./src/public/output/teamWonTossAndMatch.json',JSON.stringify(TeamWonTossAndMatchData,null,2));//calling function to write data to the json file
     }
     catch (Error) {
         console.log(Error)

@@ -1,4 +1,5 @@
 //This function returns the data of no of runs conceded per team in year 2016
+import writingData from "../public/testing/writingData.js";
 export default function extraRunsPerTeam(matchesData, deliveriesData, season ='2016') {
     try {
         let extraRunsPerTeamData = {};
@@ -23,7 +24,7 @@ export default function extraRunsPerTeam(matchesData, deliveriesData, season ='2
 
             }
         }
-        return extraRunsPerTeamData;
+        writingData('./src/public/output/extraRunsPerTeam.json',JSON.stringify(extraRunsPerTeamData,null,2))//calling function to write data to the json file
     }
     catch (Error) {
         console.log(Error)

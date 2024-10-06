@@ -1,4 +1,5 @@
 //This function will return the top 10 economical bowlers in season 2015
+import writingData from "../public/testing/writingData.js";
 export default function calculateEconomicalBowlers(matchesData, deliveriesData, season = '2015') {
     try {
         let bowlersData = {};
@@ -66,7 +67,7 @@ export default function calculateEconomicalBowlers(matchesData, deliveriesData, 
         }
         bowlersArray.sort((a, b) => a.rate - b.rate);//sorting the array
         bowlersArray = bowlersArray.slice(0, 10)//slicing to get top 10
-        return bowlersArray;
+        writingData('./src/public/output/economicalBowlers.json', JSON.stringify(bowlersArray, null, 2))//calling function to write data in jsonfile
     }
     catch (Error) {
         console.log(Error)

@@ -1,8 +1,9 @@
 //this function returns the highest no of times single player won man of the match
-import matchesPerYear from './1-matches-per-year.js'
+import writingData from "../public/testing/writingData.js";
+import fs from 'fs';
 export default function playerOfTheMatch(matchesData) {
     try {
-        let seasonListData = matchesPerYear(matchesData);//This function returns the object with key being the year
+        let seasonListData = JSON.parse(fs.readFileSync('./src/public/output/matchesPerYear.json')); 
         let noOfTimesPlayerOfMatchData = {};
         //noOfTimesPlayerOfTheMatch contains season as key and value being the nested object where the nested object contains the batsman name as key and value being no of times player won man of the match in that season
         for (let key in seasonListData) {
@@ -34,7 +35,7 @@ export default function playerOfTheMatch(matchesData) {
             noOfTimesPlayerOfMatchData[key1] = { "name": playerName, "playerOfMatchCount": highestPlayerOfMatchCount }
             highestPlayerOfMatchCount = 0;
         }
-        return noOfTimesPlayerOfMatchData;
+        writingData('./src/public/output/playerOfTheMatch.json', JSON.stringify(noOfTimesPlayerOfMatchData,null,2))//calling function to write data to json file
     }
     catch (Error) {
         console.log(Error)
