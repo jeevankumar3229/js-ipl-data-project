@@ -2,32 +2,32 @@
 import writingData from "../public/testing/writingData.js";
 export default function calculateTeamWonTossAndMatch(matchesData) {
     try {
-        let TeamWonTossAndMatchData = {};
+        let teamWonTossAndMatchData = {};
         for (let index = 0; index < matchesData.length; index++) {
             if (matchesData[index].hasOwnProperty("toss_winner") && matchesData[index].hasOwnProperty("winner")) {
                 if (matchesData[index]['toss_winner'] === matchesData[index]['winner']) {
                     //since dataset contains team name as Rising Pune Supergiants and Rising Pune Supergiant, so merging both into one
                     if (matchesData[index]['winner'] === 'Rising Pune Supergiant' || matchesData[index]['winner'] === 'Rising Pune Supergiants') {
                         let winner = "Rising Pune Supergiants"
-                        if (TeamWonTossAndMatchData.hasOwnProperty(winner)) {
-                            TeamWonTossAndMatchData[winner]++;
+                        if (teamWonTossAndMatchData.hasOwnProperty(winner)) {
+                            teamWonTossAndMatchData[winner]++;
                         }
                         else {
-                            TeamWonTossAndMatchData[winner] = 1;
+                            teamWonTossAndMatchData[winner] = 1;
                         }
                     }
                     else {
-                        if (TeamWonTossAndMatchData.hasOwnProperty([matchesData[index]["winner"]])) {
-                            TeamWonTossAndMatchData[matchesData[index]["winner"]]++;
+                        if (teamWonTossAndMatchData.hasOwnProperty([matchesData[index]["winner"]])) {
+                            teamWonTossAndMatchData[matchesData[index]["winner"]]++;
                         }
                         else {
-                            TeamWonTossAndMatchData[matchesData[index]["winner"]] = 1;
+                            teamWonTossAndMatchData[matchesData[index]["winner"]] = 1;
                         }
                     }
                 }
             }
         }
-        writingData('./src/public/output/teamWonTossAndMatch.json',JSON.stringify(TeamWonTossAndMatchData,null,2));//calling function to write data to the json file
+        writingData('./src/public/output/teamWonTossAndMatch.json',JSON.stringify(teamWonTossAndMatchData,null,2));//calling function to write data to the json file
     }
     catch (Error) {
         console.log(Error)
